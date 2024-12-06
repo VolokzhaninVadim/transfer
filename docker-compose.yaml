@@ -1,8 +1,9 @@
 services:
   db:
-    image: postgres
+    image: postgres:16
     container_name: gitea_database
     restart: always
+    env_file: ".env"
     environment:
       - POSTGRES_USER=gitea
       - POSTGRES_PASSWORD=$GITEA_DATABASE
@@ -16,6 +17,7 @@ services:
   git:
     image: gitea/gitea:1.20.5-rootless
     container_name: gitea
+    env_file: ".env"
     environment:
       - USER_UID=1000
       - USER_GID=1000
@@ -24,6 +26,8 @@ services:
       - GITEA__database__NAME=gitea
       - GITEA__database__USER=gitea
       - GITEA__database__PASSWD=$GITEA_DATABASE
+      - GITEA__server__START_SSH_SERVER=true
+      - GITEA__server__SSH_PORT=2222
     restart: always
     volumes:
       - ./data:/var/lib/gitea
