@@ -1,4 +1,3 @@
-config/*
-data/*
-postgres-db/*
+config_*
+data_*
 .env
